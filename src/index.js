@@ -24,6 +24,8 @@ export default function livereload(options = { watch: '' }) {
     ? JSON.stringify(options.clientUrl)
     : process.env.CODESANDBOX_SSE
     ? `'//' + (window.location.host.replace(/^([^.]+)-\\d+/,"$1").replace(/^([^\.]+)/, "$1-${port}")).split(':')[0] + '/livereload.js?snipver=1&port=443'`
+    : process.env.GITPOD_WORKSPACE_URL
+    ? `'//${encodeURIComponent(process.env.GITPOD_WORKSPACE_URL.replace(/^https?:\/\//, `${port}-`))}/livereload.js?snipver=1&port=443'`
     : `'//' + (window.location.host || 'localhost').split(':')[0] + ':${port}/livereload.js?snipver=1'`
 
   server = createServer(options)
